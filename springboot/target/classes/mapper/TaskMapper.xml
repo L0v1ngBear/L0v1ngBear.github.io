@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.springboot.mapper.TaskMapper">
+
+    <select id="findAll" resultType="org.example.springboot.entity.Task">
+        SELECT
+        t.id,
+        t.name,
+        t.completed,
+        t.create_time AS createTime,
+        t.deadline,
+        t.progress,
+        t.urgency,
+        t.assignee,
+        u.username AS assigneeName <!-- 别名与实体类字段匹配 -->
+        FROM task t
+        LEFT JOIN user u ON t.assignee = u.id
+        <where>
+            <if test="name != null">
+                t.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllById" resultType="org.example.springboot.entity.Task">
+        SELECT
+        t.id,
+        t.name,
+        t.completed,
+        t.create_time AS createTime,
+        t.deadline,
+        t.progress,
+        t.urgency,
+        t.assignee,
+        u.username AS assigneeName <!-- 别名与实体类字段匹配 -->
+        FROM task t
+        LEFT JOIN user u ON t.assignee = u.id
+        <where>
+            <if test="task.name != null">
+                t.name LIKE CONCAT('%', #{task.name}, '%')
+            </if>
+            <if test="id != null">
+                AND t.assignee = #{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" resultType="org.example.springboot.entity.Task">
+        select * from `task`
+        where id = #{id}
+    </select>
+
+    <select id="findByAssignee" resultType="org.example.springboot.entity.Task">
+            select * from `task`
+            where assignee = #{assignee}
+    </select>
+
+    <insert id="save">
+        INSERT INTO task (
+            name,
+            completed,
+            create_time,
+            deadline,
+            progress,
+            urgency,
+            assignee
+        ) VALUES (
+                     #{name},
+                     #{completed},
+                     #{createTime},
+                     #{deadline},
+                     #{progress},
+                     #{urgency},
+                     #{assignee}
+                 )
+    </insert>
+
+    <update id="update">
+        UPDATE task
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="completed">completed = #{completed},</if>
+            <if test="deadline != null">deadline = #{deadline},</if>
+            <if test="progress != null">progress = #{progress},</if>
+            <if test="urgency != null">urgency = #{urgency},</if>
+            <if test="assignee != null">assignee = #{assignee},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+</mapper>

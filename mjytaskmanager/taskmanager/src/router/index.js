@@ -9,19 +9,26 @@ const routes = [
     redirect: '/login'
   },
   {
-    path: '/tasks',
-    name: 'Tasks',
-    component: TaskListView
-  },
-  {
-    path: '/todos',
-    name: 'Todos',
-    component: TodoListView
-  },
-  {
-    path: '/profile',
-    name: 'Profile',
-    component: ProfileView
+    path: '/front',
+    name: 'Front',
+    component: () => import('../views/Front.vue'),
+    children: [
+      {
+        path: '/tasks',
+        name: 'Tasks',
+        component: TaskListView
+      },
+      {
+        path: '/todos',
+        name: 'Todos',
+        component: TodoListView
+      },
+      {
+        path: '/profile',
+        name: 'Profile',
+        component: ProfileView
+      },
+    ]
   },
   {
     path: '/login',

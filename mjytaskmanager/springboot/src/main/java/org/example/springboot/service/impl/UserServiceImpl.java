@@ -2,12 +2,12 @@ package org.example.springboot.service.impl;
 
 import org.example.springboot.common.Result;
 import org.example.springboot.dto.ChangePasswordDTO;
-import org.example.springboot.dto.LoginDTO;
 import org.example.springboot.entity.User;
 import org.example.springboot.mapper.UserMapper;
 import org.example.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User validateUser(LoginDTO loginDTO) {
-        return userMapper.selectUserByUsernameAndPassword(loginDTO.getUsername(), loginDTO.getPassword());
+    public User validateUser(String username) {
+        return userMapper.selectUserByUsername(username);
     }
 }

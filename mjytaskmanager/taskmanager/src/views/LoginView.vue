@@ -79,14 +79,14 @@ const handleLogin = async () => {
       try {
         // 发送登录请求，使用封装的 request 实例
         const response = await request.post('/api/login', loginForm.value);
-        if (response.code = '200') {
-          const token = response.data.token;
+        if (response.code == '200') {
+          const token = response.data;
           // 存储 JWT token
           localStorage.setItem('token', token);
           // 登录成功，跳转到任务列表页面
           router.push('/tasks');
         } else {
-          ElMessage.error(response.message || '登录失败，请检查用户名和密码');
+          ElMessage.error(response.msg || '登录失败，请检查用户名和密码');
         }
       } catch (error) {
         console.error('登录请求出错:', error);

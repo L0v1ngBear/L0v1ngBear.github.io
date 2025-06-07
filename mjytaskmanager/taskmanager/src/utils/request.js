@@ -4,6 +4,7 @@ import router from "@/router/index.js";
 
 const request = axios.create({
     baseURL: "http://118.178.142.242",
+    // baseURL: "http://localhost:8080",
     timeout: 30000  // 后台接口超时时间
 })
 

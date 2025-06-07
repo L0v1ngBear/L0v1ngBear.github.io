@@ -20,7 +20,7 @@
         WHERE id = #{id}
     </update>
 
-    <select id="selectUserByUsernameAndPassword" resultType="org.example.springboot.entity.User">
-        SELECT * FROM user WHERE username = #{username} AND password = #{password}
+    <select id="selectUserByUsername" resultType="org.example.springboot.entity.User">
+        SELECT id, username FROM user WHERE username = #{username}
     </select>
 </mapper>

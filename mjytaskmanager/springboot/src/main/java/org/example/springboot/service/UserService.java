@@ -2,7 +2,6 @@ package org.example.springboot.service;
 
 import org.example.springboot.common.Result;
 import org.example.springboot.dto.ChangePasswordDTO;
-import org.example.springboot.dto.LoginDTO;
 import org.example.springboot.entity.User;
 
 import java.util.List;
@@ -12,5 +11,5 @@ public interface UserService {
 
     Result changePassword(ChangePasswordDTO changePasswordDTO);
 
-    User validateUser(LoginDTO loginDTO);
+    User validateUser(String username);
 }

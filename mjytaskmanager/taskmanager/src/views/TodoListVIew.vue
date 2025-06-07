@@ -86,11 +86,12 @@
       <el-form :model="completeForm" label-width="80px">
         <el-form-item label="上传文件">
           <el-upload
-            action="/api/upload"
-            :show-file-list="false"
-            :on-success="handleUploadSuccess"
-            :on-error="handleUploadError"
-            ref="uploadRef"
+              action="/api/upload"
+              :show-file-list="false"
+              :on-success="handleUploadSuccess"
+              :on-error="handleUploadError"
+              :headers="getUploadHeaders"
+              ref="uploadRef"
           >
             <el-button type="primary">点击上传</el-button>
           </el-upload>
@@ -356,9 +357,9 @@ const todoStore = useTodoStore();
 
 const getCurrentUserId = () => {
   const token = localStorage.getItem('token');
-  console.log('Token:', token); // 检查 Token 是否完整（应包含三段，用 . 分隔）
+  // console.log('Token:', token); // 检查 Token 是否完整（应包含三段，用 . 分隔）
   const decoded = jwtDecode(token);
-  console.log('Decoded Token:', decoded); // 查看解码后的内容
+  // console.log('Decoded Token:', decoded); // 查看解码后的内容
   return decoded?.userId;
 };
 // 获取任务列表
@@ -411,6 +412,14 @@ const openCompleteDialog = (task) => {
     showCompleteDialog.value = true;
     completeForm.value.fileUrl = '';
   }
+};
+
+// 获取上传请求头，携带 token
+const getUploadHeaders = () => {
+  const token = localStorage.getItem('token');
+  return {
+    Authorization: `Bearer ${token}`
+  };
 };
 
 // 处理文件上传成功
